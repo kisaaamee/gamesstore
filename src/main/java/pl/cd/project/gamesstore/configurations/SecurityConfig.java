@@ -20,18 +20,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/gameBox/**", "/images/**", "/registration", "/static/**")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/", "/gameBox/**", "/images/**", "/registration", "/static/**", "/es/gameboxs")
+//                .permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll();
+        String[] AUTH_WHITELIST = {
+                "/api", "/api/**", "/api/gameboxs", "/api/gameboxs/**"
+        };
+        http.csrf().disable().authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/csrf").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Override
